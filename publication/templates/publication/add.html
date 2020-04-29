@@ -1,0 +1,19 @@
+{% extends "publication\Basic.html" %}
+
+{% block content %}
+{% load static %}
+<div class="wrapper">
+<div class="frm">
+	{% if user.is_authenticated %}
+	<b>Форма отправки</b>
+		<form method="post" enctype="multipart/form-data">
+			{% csrf_token %}
+			{{ form.as_p }}
+			<input type="submit" value="Добавить">
+		</form>
+   {% else %}
+	<b>Вы не <a href="{% url 'login' %}?next={{request.path}}">авторизованы</a></b>
+   {% endif %}
+</div>
+</div>
+{% endblock %}

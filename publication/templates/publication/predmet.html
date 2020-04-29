@@ -1,0 +1,29 @@
+{% extends "publication/basic.html" %}
+
+{% block nav %}
+				<li><a href='{% url "zhurnal" %}'>О журнале</a></li>
+				<li><a href='{% url "etic" %}'>Этика Публикации</a></li>
+				<li><a href='{% url "gid" %}'>Гид для автора</a></li>
+							{% if user.is_authenticated %}
+				<li><a href="{% url 'logout'%}?next={{request.path}}" class="now_page">Выход</a></li>
+   							{% else %}
+				<li><a href="{% url 'login'%}?next={{request.path}}" class="now_page">Вход</a></li>
+   							{% endif %}
+{% endblock %}
+
+{% block content %}
+
+{% for pr in pred_publ %}
+<div class="pred_publ">
+	<p>{{pr.author}}</p>
+	<p>{{pr.file}}</p>
+	<p>{{pr.date}}</p>
+</div>
+{% endfor %}
+
+<h2>{{pred.name}}</h2>
+<p>{{pred.seria}}</p>
+<img src="{{pred.img_url.url}}" alt="1">
+<p>{% autoescape off %}{{ pred.description }}{% endautoescape %}</p>
+        </div>
+{% endblock %}

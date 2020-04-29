@@ -1,0 +1,23 @@
+{% extends "publication\Basic.html" %}
+
+{% block title%} Все журналы {%endblock%}
+
+{% block content %}
+{% load static %}
+<div class="all_files">
+<h2>Все публикации</h2>
+<ol>
+{% for file in files %}
+<!--<p>Авторы : {{file.author}}</p>-->
+
+    <li><p><!--Название : --><a href='{% url "down" fn=file.file %}' download>{{file.file}}</a></p></li>
+
+<!--<p>Дата публикации : {{file.date}}</p>
+<p>Серия : {{file.serius}}</p>
+<hr>-->
+    {% endfor %}
+</ol>
+</div>
+{% endblock %}
+
+

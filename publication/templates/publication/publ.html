@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+{% for p in ps %}
+<p>{{p.author}}</p>
+<p><a href='{% url "only" pk=p.pk %}'>Ссылка</a></p>
+<p><a href='{% url "down" fn=p.file %}' download>Ссылка</a></p>
+<p>{{p.date}}</p>
+<hr>
+{% endfor %}
+</body>
+</html>

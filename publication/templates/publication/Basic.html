@@ -1,0 +1,123 @@
+{% load static %}
+<html>
+	<head>
+		<title>{% block title %}KGU{% endblock %}</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+		<link rel="stylesheet" href="{% static 'publication/style.css' %}">
+		<link rel="stylesheet" href="{% static 'publication/style_dark.css' %}">
+	</head>
+	<body>
+		<header>
+			<img src="{% static 'publication/uzor.png'%}" class="img1">
+				<div class="imgtxt">
+				<img src="{% static 'publication/logo.png'%}" class="img2">
+				<div class="head_text">
+					Вестник КГУ имени Шокана Уалиханова
+				</div>
+			</div>
+			<img src="{% static 'publication/uzor.png'%}" class="img3">
+		</header>
+
+	<div class="flex_parents">
+		<!-- <a href="" class = "nm">☰</a> -->
+			<ul>
+{% block nav %}
+				<li><a href='{% url "zhurnal" %}'>О журнале</a></li>
+				<li><a href='{% url "etic" %}'>Этика Публикации</a></li>
+				<li><a href='{% url "gid" %}'>Гид для автора</a></li>
+							{% if user.is_authenticated %}
+				<li><a href="{% url 'logout'%}?next={{request.path}}">Выход</a></li>
+   							{% else %}
+				<li><a href="{% url 'login'%}?next={{request.path}}">Вход</a></li>
+   							{% endif %}
+{% endblock %}
+			</ul>
+	</div>
+
+<div class="bd">
+{% block content %}
+	<div class="predmeti">
+	<div class="btn"><b>Предметы</b></div>
+			<ul class = "pred">
+				<li><a href="#">Математика</a></li>
+				<li><a href="#">Физика</a></li>
+				<li><a href="#">Биология</a></li>
+				<li><a href="#">Химия</a></li>
+				<li><a href="#">Педагогика</a></li>
+				<li><a href="#">Литература</a></li>
+				<li><a href="#">Экономика</a></li>
+				<li><a href="#">Право</a></li>
+			</ul>
+		</div> {% endblock %}
+</div>
+
+<div class="scrollup"></div>
+	<div class="ftr">
+		<div class="ft_parents">
+				<div class="ft1">
+				<b>Связанные ссылки</b>
+				<ul>
+					<li><a href="http://www.kgu.kz/">Кгу</a></li>
+					<li><a href="http://timetable.kgu.kz/">Расписание</a></li>
+					<li><a href="http://skud.kgu.kz/">Скуд</a></li>
+				</ul>
+				</div>
+				<div class="ft2">
+				<b>Полезные ссылки</b>
+
+				<ul>
+					<li><a href="{% url 'all_files' %}">Все публикации</a></li>
+					<li><a href="{% url 'add' %}">Добавить публикацию</a></li>
+					<li><a href="#">Рейтинг учителей</a></li>
+					<li><a href="#">Статистика</a></li>
+				</ul>
+				 <br>
+				</div>
+				<div class="ft3">
+					<input type="search" name="q" class = "inpt1" placeholder="Поиск по сайту">
+   				<input type="submit" class = "inpt2" value="Найти">
+   					<div class="togg_p">Сменить фон</div><div class="togg"><div class="circle"></div></div></div>
+		</div>
+		<hr width="90%">
+
+	</div>
+<script>
+$(document).on('click', '.btn', function(){
+	$( ".pred" ).toggle({duration: 400,easing: "linear",start:function(){$(".content").toggleClass("fixed");}
+})});
+$(document).on('click', '.togg', function(){
+	$(".togg").toggleClass("dark");
+	$(".circle").toggleClass("dark");
+	$("body").toggleClass("dark");
+	$("header").toggleClass("dark");
+	$(".head_text").toggleClass("dark");
+	$(".flex_parents").toggleClass("dark");
+	$(".flex_parents ul").toggleClass("dark");
+	$(".flex_parents ul li a").toggleClass("dark");
+	$(".predmeti ul li").toggleClass("dark");
+	$(".btn").toggleClass("dark");
+	$(".content").toggleClass("dark");
+	$(".ftr").toggleClass("dark");
+})
+
+$(window).scroll(function(){
+      if ($(this).scrollTop() > 160) {
+          $('.flex_parents').addClass('fixed');
+          $('.predmeti').addClass('fixed');
+          $('.btn').css({"position":"fixed"});
+          $('.scrollup').fadeIn();
+      } else {
+          $('.flex_parents').removeClass('fixed');
+          $('.predmeti').removeClass('fixed');
+          $('.btn').css({"position":"absolute"});
+          $('.scrollup').fadeOut();
+      }
+});
+	$('.scrollup').click(function(){
+		$("html, body").animate({ scrollTop: 0 }, 600);
+	return false;
+});
+		</script>
+	</body>
+</html>
